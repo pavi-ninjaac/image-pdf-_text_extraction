@@ -1,0 +1,33 @@
+import cv2
+import pytesseract
+import pdf2image as pdf
+
+from pdf2image.exceptions import (
+PDFInfoNotInstalledError,
+PDFPageCountError,
+PDFSyntaxError
+)
+
+pytesseract.pytesseract.tesseract_cmd = 'E:\\tesseract\\installed_file\\tesseract.exe'
+
+file_path=r'C:\Users\ninjaac\PycharmProjects\Image_to_text\venv\ocr_workshop.pdf'
+
+images=pdf.convert_from_path(file_path,500,poppler_path=r'E:\poppler\poppler-0.68.0_x86 (1)\poppler-0.68.0\bin')
+image_count=1
+for image in images:
+    image_name="page"+str(image_count)+".jpeg"
+    image.save(image_name,'JPEG')
+    #path="page"+str(image_count)+".jpeg"
+    img=cv2.imread(image_name,1)
+    cv2.imshow('to convert image',img)
+    text=pytesseract.image_to_string(img)
+    print(text)
+
+
+    text_count=1
+    text_file="text"+str(text_count)+".txt"
+    with open(text_file,'w+') as f:
+        f.writelines(text)
+    text_count+=1
+    image_count += 1
+cv2.waitKey(0)
