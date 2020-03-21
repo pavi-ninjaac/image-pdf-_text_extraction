@@ -1,0 +1,18 @@
+import cv2
+import pytesseract
+
+from pdf2image import convert_from_path
+#from wand.image import Image as wa
+#import magickwand
+
+pytesseract.pytesseract.tesseract_cmd='E:\\tesseract\\installed_file\\tesseract.exe'
+path="C:\\Users\\ninjaac\\Desktop\\image_1.png"
+img=cv2.imread(path,1)
+cv2.imshow('to convert image',img)
+text=pytesseract.image_to_string(img)
+print(text)
+cv2.waitKey(0)
+with open('text.txt','w+') as f:
+    f.writelines(text)
+
+#c:\program files\tessersct-ocr
